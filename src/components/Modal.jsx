@@ -1,7 +1,7 @@
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button, Group } from '@mantine/core';
 import ModalHeader from './ModalHeader';
-import ModalContet from './ModalContent';
+import ModalContent from './ModalContent';
 
 export default function AnimeModal({ anime }) {
     const [opened, { open, close }] = useDisclosure(false);
@@ -15,7 +15,7 @@ export default function AnimeModal({ anime }) {
                 transitionProps={{ transition: 'fade', duration: 200 }}
             >
                 <ModalHeader anime={anime} />
-                <ModalContet anime={anime} />
+                <ModalContent anime={anime} />
             </Modal>
 
             <Group position="center">

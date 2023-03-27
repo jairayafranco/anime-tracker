@@ -1,10 +1,12 @@
 import { Container, Pagination } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import AnimeCard from "./Card";
+import useAnimeStore from '../store/useAnimeStore';
 
-export default function AnimeCardContainer({ animes }) {
+export default function AnimeCardContainer() {
     const [animesFound, setAnimesFound] = useState([]);
     const cardsPerPage = 8;
+    const animes = useAnimeStore(state => state.animes);
 
     useEffect(() => {
         setAnimesFound(animes.slice(0, cardsPerPage));

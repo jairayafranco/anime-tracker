@@ -1,13 +1,10 @@
 import { Tabs } from '@mantine/core';
 import { IconSearch, IconEye } from '@tabler/icons-react';
-import { useState } from 'react';
 import SearchAnime from './Search';
 import AnimeCardContainer from './CardContainer';
 import AnimesWatchedContainer from './AnimesWatchedContainer';
 
 export default function AnimeTabs() {
-    const [animes, setAnimes] = useState([]);
-
     return (
         <Tabs keepMounted={false} defaultValue="search">
             <Tabs.List position="center">
@@ -16,8 +13,8 @@ export default function AnimeTabs() {
             </Tabs.List>
 
             <Tabs.Panel value="search" pt="xs">
-                <SearchAnime setAnimes={setAnimes} />
-                <AnimeCardContainer animes={animes} />
+                <SearchAnime />
+                <AnimeCardContainer />
             </Tabs.Panel>
 
             <Tabs.Panel value="watched" pt="xs">

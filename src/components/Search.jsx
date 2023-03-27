@@ -2,9 +2,11 @@ import { TextInput, Button, Box } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import searchAnimes from '../api/searchAnimes';
+import useAnimeStore from '../store/useAnimeStore';
 
-export default function SearchAnime({ setAnimes }) {
+export default function SearchAnime() {
     const [loading, setLoading] = useState(false);
+    const setAnimesStore = useAnimeStore(state => state.setAnimes);
 
     const form = useForm({
         initialValues: {
@@ -20,7 +22,7 @@ export default function SearchAnime({ setAnimes }) {
     const getAnimes = async (values) => {
         setLoading(true);
         const { data } = await searchAnimes(values.name);
-        setAnimes(data);
+        setAnimesStore(data);
         setLoading(false);
     };
 

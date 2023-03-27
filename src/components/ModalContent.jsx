@@ -3,7 +3,7 @@ import { IconEye, IconEyeClosed } from '@tabler/icons-react';
 import { useState, useEffect } from "react";
 import AnimeDataAccordion from "./Accordion";
 
-export default function ModalContet({ anime }) {
+export default function ModalContent({ anime }) {
     const [watched, setWatched] = useState(false);
 
     useEffect(() => {
