@@ -5,6 +5,28 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React</title>
+    <script>
+      // Establecer el color scheme antes de que se cargue la página
+      (function() {
+        const stored = localStorage.getItem('mantine-color-scheme');
+        const scheme = stored || 'light';
+        document.documentElement.setAttribute('data-mantine-color-scheme', scheme);
+        const bgColor = scheme === 'dark' ? '#1a1b1e' : '#f8f9fa';
+        document.documentElement.style.backgroundColor = bgColor;
+        document.body.style.backgroundColor = bgColor;
+        
+        // Escuchar cambios en localStorage para actualizar el color scheme
+        window.addEventListener('storage', function(e) {
+          if (e.key === 'mantine-color-scheme') {
+            const newScheme = e.newValue || 'light';
+            document.documentElement.setAttribute('data-mantine-color-scheme', newScheme);
+            const newBgColor = newScheme === 'dark' ? '#1a1b1e' : '#f8f9fa';
+            document.documentElement.style.backgroundColor = newBgColor;
+            document.body.style.backgroundColor = newBgColor;
+          }
+        });
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

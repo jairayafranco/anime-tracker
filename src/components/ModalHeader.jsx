@@ -1,23 +1,24 @@
 import { Container, Image, Text, Chip, Group } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 
 export default function ModalHeader({ anime }) {
+    const isMobile = useMediaQuery('(max-width: 768px)');
+    
     return (
         <>
             <Text
                 size="xl"
-                weight={500}
+                fw={500}
                 style={{ textTransform: "capitalize" }}
                 ta="center"
             >
                 {anime.title}
             </Text>
-            <Container size="xl" mt="md" sx={{
+            <Container size="xl" mt="md" style={{
                 display: "flex",
                 gap: "2em",
-                '@media (max-width: 768px)': {
-                    flexDirection: "column",
-                    alignItems: "center",
-                },
+                flexDirection: isMobile ? "column" : "row",
+                alignItems: isMobile ? "center" : "flex-start",
             }}>
                 <Image
                     src={anime.images.webp.large_image_url}
@@ -27,7 +28,7 @@ export default function ModalHeader({ anime }) {
                 <Text>
                     {anime.synopsis}
                     <Chip.Group>
-                        <Group position="left" mt="md">
+                        <Group justify="flex-start" mt="md">
                             <Chip variant="outline" radius="md">
                                 Score - {anime.score}
                             </Chip>

@@ -39,7 +39,7 @@ export default function ModalContent({ anime }) {
         <>
             <Container size="xl" mt="md">
 
-                <Group position="left" my="md">
+                <Group justify="flex-start" my="md">
                     <Button onClick={() => handleAnimesWatched(anime)}>
                         {watched ? <IconEye size="1rem" /> : <IconEyeClosed size="1rem" />}
                         {watched ? 'No Watched' : 'Watched'}

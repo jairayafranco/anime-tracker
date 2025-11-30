@@ -18,7 +18,7 @@ export default function AnimeModal({ anime }) {
                 <ModalContent anime={anime} />
             </Modal>
 
-            <Group position="center">
+            <Group justify="center">
                 <Button variant="light" color="blue" fullWidth mt="md" radius="md" onClick={open}>
                     More info
                 </Button>

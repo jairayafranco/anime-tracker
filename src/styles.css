@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+[data-mantine-color-scheme="light"] {
+  background-color: #f8f9fa !important;
+}
+
+[data-mantine-color-scheme="light"] body,
+[data-mantine-color-scheme="light"] #root {
+  background-color: #f8f9fa !important;
+}
+
+[data-mantine-color-scheme="dark"] {
+  background-color: #1a1b1e !important;
+}
+
+[data-mantine-color-scheme="dark"] body,
+[data-mantine-color-scheme="dark"] #root {
+  background-color: #1a1b1e !important;
+}
+

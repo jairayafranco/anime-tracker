@@ -7,7 +7,7 @@ import AnimesWatchedContainer from './AnimesWatchedContainer';
 export default function AnimeTabs() {
     return (
         <Tabs keepMounted={false} defaultValue="search">
-            <Tabs.List position="center">
+            <Tabs.List justify="center">
                 <Tabs.Tab value="search" icon={<IconSearch size="0.8rem" />}>Search Anime</Tabs.Tab>
                 <Tabs.Tab value="watched" icon={<IconEye size="0.8rem" />}>Animes Watched</Tabs.Tab>
             </Tabs.List>

@@ -23,10 +23,11 @@ export default function AnimeCardContainer() {
 
     return (
         <>
-            <Container size="xl" mt="md" sx={{
+            <Container size="xl" mt="md" style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-                gridGap: '1rem'
+                gap: '1rem',
+                alignItems: 'start'
             }}>
                 {
                     animesFound.map((anime, index) => (
@@ -34,7 +35,7 @@ export default function AnimeCardContainer() {
                     ))
                 }
             </Container>
-            <Pagination total={Math.ceil(animes.length / cardsPerPage)} mt="md" sx={{ display: 'flex', justifyContent: 'center', }} onChange={handlePagination} />
+            <Pagination total={Math.ceil(animes.length / cardsPerPage)} mt="md" style={{ display: 'flex', justifyContent: 'center' }} onChange={handlePagination} />
         </>
     );
 }
