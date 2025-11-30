@@ -23,11 +23,23 @@ export default function ModalHeader({ anime }) {
                 flexDirection: isMobile ? "column" : "row",
                 alignItems: isMobile ? "center" : "flex-start",
             }}>
-                <Image
-                    src={getAnimeImageUrl(anime)}
-                    width={250}
-                    alt={anime.title || 'Anime'}
-                />
+                <div style={{
+                    width: isMobile ? '250px' : '300px',
+                    height: isMobile ? '350px' : '420px',
+                    flexShrink: 0,
+                    borderRadius: '8px',
+                    overflow: 'hidden'
+                }}>
+                    <Image
+                        src={getAnimeImageUrl(anime)}
+                        alt={anime.title || 'Anime'}
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover'
+                        }}
+                    />
+                </div>
                 <Text>
                     {anime.synopsis || 'No synopsis available.'}
                     <Chip.Group>
