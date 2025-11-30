@@ -6,6 +6,8 @@ import ModalContent from './ModalContent';
 export default function AnimeModal({ anime }) {
     const [opened, { open, close }] = useDisclosure(false);
     
+    if (!anime) return null;
+    
     return (
         <>
             <Modal
@@ -20,7 +22,7 @@ export default function AnimeModal({ anime }) {
 
             <Group justify="center">
                 <Button variant="light" color="blue" fullWidth mt="md" radius="md" onClick={open}>
-                    More info
+                    More Info
                 </Button>
             </Group>
         </>

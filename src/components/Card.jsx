@@ -1,32 +1,31 @@
 import { Card, Image, Text, Badge, Group } from '@mantine/core';
 import AnimeModal from './Modal';
+import { truncateText, getAnimeImageUrl } from '../utils/helpers';
 
 export default function AnimeCard({ anime }) {
-    const truncateText = (text, maxLength = 150) => {
-        if (!text) return 'No synopsis available.';
-        if (text.length <= maxLength) return text;
-        return text.substring(0, maxLength).trim() + '...';
-    };
+    if (!anime) return null;
 
     return (
         <Card shadow="sm" padding="lg" radius="md" withBorder style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
             <Card.Section>
                 <Image
-                    src={anime.images.webp.large_image_url}
+                    src={getAnimeImageUrl(anime)}
                     height={160}
-                    alt={anime.title}
+                    alt={anime.title || 'Anime'}
                 />
             </Card.Section>
 
             <Group justify="space-between" mt="md" mb="xs">
-                <Text fw={500}>{anime.title}</Text>
+                <Text fw={500}>{anime.title || 'No title'}</Text>
             </Group>
 
-            <Group justify="space-between" mb="xs">
-                <Badge color="pink" variant="light">
-                    {anime.score}
-                </Badge>
-            </Group>
+            {anime.score && (
+                <Group justify="space-between" mb="xs">
+                    <Badge color="pink" variant="light">
+                        {anime.score}
+                    </Badge>
+                </Group>
+            )}
 
             <Text 
                 size="sm" 

@@ -23,7 +23,7 @@ export default function AppBar() {
                 <h1 style={{ margin: 0, fontSize: 24 }}>Anime Tracker</h1>
             </Flex>
             <Flex align="center">
-                <Tooltip label={`${colorScheme === 'light' ? 'Dark' : 'Ligh'} theme`} position="left">
+                <Tooltip label={`Switch to ${colorScheme === 'light' ? 'dark' : 'light'} theme`} position="left">
                     <ActionIcon variant="default" onClick={() => toggleColorScheme()}>
                         {
                             colorScheme === 'light'

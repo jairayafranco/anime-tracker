@@ -1,26 +1,18 @@
 import { Container, Card, Group, Badge, Button, Image, Text } from '@mantine/core';
 import { useEffect, useState } from 'react';
+import { getWatchedAnimes, removeWatchedAnime, truncateText, getAnimeImageUrl } from '../utils/helpers';
 
 export default function AnimesWatchedContainer() {
     const [animesWatchedList, setAnimesWatchedList] = useState([]);
 
     useEffect(() => {
-        const getLocalStoragedAnimes = JSON.parse(localStorage.getItem('animesWatched')) || [];
-        setAnimesWatchedList(getLocalStoragedAnimes);
+        const animes = getWatchedAnimes();
+        setAnimesWatchedList(animes);
     }, []);
 
     const handleRemove = (anime) => {
-        const animesWatched = JSON.parse(localStorage.getItem('animesWatched')) || [];
-        const index = animesWatched.findIndex((animeWatched) => animeWatched.mal_id === anime.mal_id);
-        animesWatched.splice(index, 1);
-        localStorage.setItem('animesWatched', JSON.stringify(animesWatched));
-        setAnimesWatchedList(animesWatched);
-    };
-
-    const truncateText = (text, maxLength = 150) => {
-        if (!text) return 'No synopsis available.';
-        if (text.length <= maxLength) return text;
-        return text.substring(0, maxLength).trim() + '...';
+        const updatedAnimes = removeWatchedAnime(anime.mal_id);
+        setAnimesWatchedList(updatedAnimes);
     };
 
     return (
@@ -36,21 +28,23 @@ export default function AnimesWatchedContainer() {
                         <Card key={anime.mal_id || index} shadow="sm" padding="lg" radius="md" withBorder style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                             <Card.Section>
                                 <Image
-                                    src={anime.images.webp.large_image_url}
+                                    src={getAnimeImageUrl(anime)}
                                     height={160}
-                                    alt={anime.title}
+                                    alt={anime.title || 'Anime'}
                                 />
                             </Card.Section>
 
                             <Group justify="space-between" mt="md" mb="xs">
-                                <Text fw={500}>{anime.title}</Text>
+                                <Text fw={500}>{anime.title || 'Sin título'}</Text>
                             </Group>
 
-                            <Group justify="space-between" mb="xs">
-                                <Badge color="pink" variant="light">
-                                    {anime.score}
-                                </Badge>
-                            </Group>
+                            {anime.score && (
+                                <Group justify="space-between" mb="xs">
+                                    <Badge color="pink" variant="light">
+                                        {anime.score}
+                                    </Badge>
+                                </Group>
+                            )}
 
                             <Text 
                                 size="sm" 
@@ -65,12 +59,17 @@ export default function AnimesWatchedContainer() {
                             </Text>
 
                             <Button variant="light" color="blue" fullWidth mt="md" radius="md" onClick={() => handleRemove(anime)}>
-                                Remove from list
+                                Remove from List
                             </Button>
                         </Card>
                     ))
                 }
             </Container>
+            {animesWatchedList.length === 0 && (
+                <Text ta="center" c="dimmed" mt="xl" style={{ width: '100%', display: 'block' }}>
+                    You don't have any animes in your watched list.
+                </Text>
+            )}
         </>
     );
 }

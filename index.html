@@ -13,7 +13,21 @@
         document.documentElement.setAttribute('data-mantine-color-scheme', scheme);
         const bgColor = scheme === 'dark' ? '#1a1b1e' : '#f8f9fa';
         document.documentElement.style.backgroundColor = bgColor;
-        document.body.style.backgroundColor = bgColor;
+        
+        // Función para aplicar el color de fondo al body de forma segura
+        const applyBodyBackground = () => {
+          if (document.body) {
+            document.body.style.backgroundColor = bgColor;
+          }
+        };
+        
+        // Intentar aplicar inmediatamente si el body ya existe
+        applyBodyBackground();
+        
+        // Si el body no existe aún, esperar a que se cargue el DOM
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', applyBodyBackground);
+        }
         
         // Escuchar cambios en localStorage para actualizar el color scheme
         window.addEventListener('storage', function(e) {
@@ -22,7 +36,11 @@
             document.documentElement.setAttribute('data-mantine-color-scheme', newScheme);
             const newBgColor = newScheme === 'dark' ? '#1a1b1e' : '#f8f9fa';
             document.documentElement.style.backgroundColor = newBgColor;
-            document.body.style.backgroundColor = newBgColor;
+            
+            // Aplicar al body de forma segura
+            if (document.body) {
+              document.body.style.backgroundColor = newBgColor;
+            }
           }
         });
       })();

@@ -2,62 +2,57 @@ import { Container, Button, Group } from "@mantine/core";
 import { IconEye, IconEyeClosed } from '@tabler/icons-react';
 import { useState, useEffect } from "react";
 import AnimeDataAccordion from "./Accordion";
+import { isAnimeWatched, addWatchedAnime, removeWatchedAnime, getTrailerUrl } from "../utils/helpers";
 
 export default function ModalContent({ anime }) {
     const [watched, setWatched] = useState(false);
 
     useEffect(() => {
-        const animesWatched = JSON.parse(localStorage.getItem('animesWatched')) || [];
-        const searchIfAnimeIsWatched = animesWatched.find((animeWatched) => animeWatched.mal_id === anime.mal_id);
-
-        if (searchIfAnimeIsWatched) {
-            setWatched(true);
-            return;
+        if (anime?.mal_id) {
+            setWatched(isAnimeWatched(anime.mal_id));
         }
+    }, [anime?.mal_id]);
 
-        setWatched(false);
-    }, []);
+    const handleAnimesWatched = () => {
+        if (!anime?.mal_id) return;
 
-    const handleAnimesWatched = (anime) => {
-        const animesWatched = JSON.parse(localStorage.getItem('animesWatched')) || [];
-        const searchIfAnimeIsWatched = animesWatched.find((animeWatched) => animeWatched.mal_id === anime.mal_id);
-
-        if (searchIfAnimeIsWatched) {
-            const index = animesWatched.findIndex((animeWatched) => animeWatched.mal_id === anime.mal_id);
-            animesWatched.splice(index, 1);
-            localStorage.setItem('animesWatched', JSON.stringify(animesWatched));
-            setWatched(!watched);
-            return;
+        if (watched) {
+            removeWatchedAnime(anime.mal_id);
+        } else {
+            addWatchedAnime(anime);
         }
-
-        animesWatched.push(anime);
-        localStorage.setItem('animesWatched', JSON.stringify(animesWatched));
         setWatched(!watched);
     };
+
+    const trailerUrl = getTrailerUrl(anime);
 
     return (
         <>
             <Container size="xl" mt="md">
 
                 <Group justify="flex-start" my="md">
-                    <Button onClick={() => handleAnimesWatched(anime)}>
+                    <Button onClick={handleAnimesWatched}>
                         {watched ? <IconEye size="1rem" /> : <IconEyeClosed size="1rem" />}
-                        {watched ? 'No Watched' : 'Watched'}
+                        {watched ? 'Mark as Not Watched' : 'Mark as Watched'}
                     </Button>
-                    <Button onClick={() => window.open(anime.url, "_blank")}>
-                        MyAnimeList
-                    </Button>
+                    {anime?.url && (
+                        <Button onClick={() => window.open(anime.url, "_blank")}>
+                            MyAnimeList
+                        </Button>
+                    )}
                 </Group>
 
-                <Button
-                    fullWidth
-                    variant="light"
-                    color="blue"
-                    radius="md"
-                    onClick={() => window.open(anime.trailer.url, "_blank")}
-                >
-                    Watch trailer
-                </Button>
+                {trailerUrl && (
+                    <Button
+                        fullWidth
+                        variant="light"
+                        color="blue"
+                        radius="md"
+                        onClick={() => window.open(trailerUrl, "_blank")}
+                    >
+                        Watch Trailer
+                    </Button>
+                )}
 
                 <AnimeDataAccordion anime={anime} />
 
